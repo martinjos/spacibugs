@@ -13,6 +13,9 @@
         output = document.getElementById("output");
         canvas.width = C_WIDTH;
         canvas.height = C_HEIGHT;
+        canvas.addEventListener("pointerdown", pointerDown);
+        canvas.addEventListener("pointerup", pointerUp);
+        canvas.addEventListener("pointercancel", pointerUp);
         ctx = canvas.getContext("2d", {alpha: false});
         ctx.strokeStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -29,10 +32,29 @@
         ctx.lineTo(2*C_WIDTH/3, 2*C_HEIGHT/3);
         ctx.stroke();
       }
+      var pointers = {};
+      function pointerDown(event) {
+        let x = event.offsetX;
+        let y = event.offsetY;
+        let bx = -1, by = -1;
+        if (x < 3*B_RADIUS && x >= B_RADIUS) {
+          bx = 0;
+        } else if (x >= C_WIDTH-3*B_RADIUS && x < C_WIDTH-B_RADIUS) {
+          bx = 1;
+        }
+        let ny = Math.floor(y/B_RADIUS);
+        if (ny % 3 != 0 && bx != -1) {
+          by = Math.floor(ny/3);
+          bn = bx*3 + by;
+          output.textContent += `${bn} `;
+        }
+      }
+      function pointerUp(event) {
+      }
       function fullscreen() {
         canvas.requestFullscreen()
           .then((value) => {
-            output.innerHTML = `${canvas.width}x${canvas.height}`;
+            output.textContent = `${canvas.width}x${canvas.height}\n`;
           });
       }
       document.addEventListener("DOMContentLoaded", init);
