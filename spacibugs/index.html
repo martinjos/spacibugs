@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <title>Spacibugs</title>
     <script>
-      var canvas, ctx;
-      document.addEventListener("DOMContentLoaded", function() {
+      var canvas, ctx, output;
+      document.addEventListener("DOMContentLoaded", () => {
         canvas = document.getElementById("canvas");
+        output = document.getElementById("output");
         ctx = canvas.getContext("2d", {alpha: false});
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = "white";
@@ -15,6 +16,12 @@
         ctx.lineTo(200, 200);
         ctx.stroke();
       });
+      function fullscreen() {
+        canvas.requestFullscreen()
+          .then((value) => {
+            output.innerHTML = `${canvas.width}x${canvas.height}`;
+          });
+      }
     </script>
     <style>
       body {
@@ -25,6 +32,8 @@
   </head>
   <body>
     <h1>SPACIBUGS</h1>
-    <canvas id="canvas" width="800" height="600">
+    <p><a onclick="fullscreen();">Fullscreen mode</a></p>
+    <canvas id="canvas" width="1280" height="720"></canvas>
+    <div id="output"></div>
   </body>
 </html>
