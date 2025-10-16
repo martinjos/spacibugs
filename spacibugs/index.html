@@ -7,10 +7,14 @@
       var canvas, ctx;
       document.addEventListener("DOMContentLoaded", function() {
         canvas = document.getElementById("canvas");
-        ctx = canvas.getContext("2d");
+        ctx = canvas.getContext("2d", {alpha: false});
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = "white";
+        ctx.beginPath();
         ctx.moveTo(100, 100);
         ctx.drawTo(200, 200);
-      }
+        ctx.stroke();
+      });
     </script>
   </head>
   <body>
