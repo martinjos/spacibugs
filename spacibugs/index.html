@@ -33,6 +33,7 @@
         ctx.stroke();
       }
       var pointers = {};
+      var buttons = new Array(6).fill(0, 0, 6);
       function pointerDown(event) {
         let x = event.offsetX;
         let y = event.offsetY;
@@ -45,11 +46,23 @@
         let ny = Math.floor(y/B_RADIUS);
         if (ny % 3 != 0 && bx != -1) {
           by = Math.floor(ny/3);
-          bn = bx*3 + by;
-          output.textContent += `${bn} `;
+          let bn = bx*3 + by;
+          pointers[event.pointerId] = bn;
+          buttons[bn] += 1;
+          showButtons();
         }
       }
       function pointerUp(event) {
+        let id = event.pointerId;
+        let bn = pointers[id];
+        delete pointers[id];
+        if (bn !== undefined) {
+          buttons[bn] -= 1;
+          showButtons();
+        }
+      }
+      function showButtons() {
+        output.textContent = buttons.join(" ");
       }
       function fullscreen() {
         canvas.requestFullscreen()
