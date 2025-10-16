@@ -65,13 +65,13 @@
         }
       }
       function pointerMove(event) {
-        logPointerEvent(event);
+        //logPointerEvent(event);
       }
       function showButtons() {
         //output.textContent = buttons.join(" ");
       }
       function logPointerEvent(e) {
-        output.innerHTML += `${e.timeStamp} ${e.type} #${e.pointerId} @${e.persistentDeviceId} (${e.offsetX}, ${e.offsetY})<br>\n`;
+        output.innerHTML += `${e.timeStamp} ${e.type} #${e.pointerId} @${e.persistentDeviceId} (${Math.round(e.offsetX)}, ${Math.round(e.offsetY)})<br>\n`;
       }
       function fullscreen() {
         canvas.requestFullscreen()
@@ -85,6 +85,9 @@
       body {
         background-color: #101010;
         color: white;
+      }
+      #output {
+        font: monospace;
       }
     </style>
   </head>
