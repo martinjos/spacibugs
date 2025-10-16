@@ -71,7 +71,7 @@
         //output.textContent = buttons.join(" ");
       }
       function logPointerEvent(e) {
-        output.innerHTML += `${e.timeStamp} ${e.type} #${e.pointerId} @${e.persistentDeviceId} (${Math.round(e.offsetX)}, ${Math.round(e.offsetY)})<br>\n`;
+        //output.innerHTML += `${e.timeStamp} ${e.type} #${e.pointerId} @${e.persistentDeviceId} (${Math.round(e.offsetX)}, ${Math.round(e.offsetY)})<br>\n`;
       }
       function fullscreen() {
         canvas.requestFullscreen()
@@ -95,6 +95,13 @@
     <h1>SPACIBUGS</h1>
     <h2><a onclick="fullscreen();">Enter full-screen mode</a></h2>
     <canvas id="canvas"></canvas>
+    <p>Tips:</p>
+    <ul>
+      <li>Use your mobile phone.</li>
+      <li>Use Firefox for mobile.</li>
+      <li>Use landscape mode.</li>
+      <li>Enter full-screen mode.</li>
+    </ul>
     <div id="output"></div>
   </body>
 </html>
