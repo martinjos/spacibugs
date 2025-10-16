@@ -17,8 +17,12 @@
         ctx.strokeStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         for (let y = 2*B_RADIUS; y < C_HEIGHT; y += 4*B_RADIUS) {
+          ctx.beginPath();
           ctx.ellipse(2*B_RADIUS, y, B_RADIUS, B_RADIUS, 0, 0, Math.PI);
+          ctx.stroke();
+          ctx.beginPath();
           ctx.ellipse(C_WIDTH-2*B_RADIUS, y, B_RADIUS, B_RADIUS, 0, 0, Math.PI);
+          ctx.stroke();
         }
         ctx.beginPath();
         ctx.moveTo(C_WIDTH/3, C_HEIGHT/3);
