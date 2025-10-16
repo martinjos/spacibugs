@@ -4,24 +4,34 @@
     <meta charset="utf-8">
     <title>Spacibugs</title>
     <script>
+      const C_WIDTH = 1280;
+      const C_HEIGHT = 720;
+      const B_RADIUS = C_HEIGHT / 10;
       var canvas, ctx, output;
-      document.addEventListener("DOMContentLoaded", () => {
+      function init() {
         canvas = document.getElementById("canvas");
         output = document.getElementById("output");
+        canvas.width = C_WIDTH;
+        canvas.height = C_HEIGHT;
         ctx = canvas.getContext("2d", {alpha: false});
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        for (let y = 2*B_RADIUS; y < C_HEIGHT; y += 4*B_RADIUS) {
+          ctx.ellipse(2*B_RADIUS, y, B_RADIUS, B_RADIUS, 0, 0, Math.PI);
+          ctx.ellipse(C_WIDTH-2*B_RADIUS, y, B_RADIUS, B_RADIUS, 0, 0, Math.PI);
+        }
         ctx.beginPath();
-        ctx.moveTo(100, 100);
-        ctx.lineTo(200, 200);
+        ctx.moveTo(C_WIDTH/3, C_HEIGHT/3);
+        ctx.lineTo(2*C_WIDTH/3, 2*C_HEIGHT/3);
         ctx.stroke();
-      });
+      }
       function fullscreen() {
         canvas.requestFullscreen()
           .then((value) => {
             output.innerHTML = `${canvas.width}x${canvas.height}`;
           });
       }
+      document.addEventListener("DOMContentLoaded", init);
     </script>
     <style>
       body {
@@ -32,8 +42,8 @@
   </head>
   <body>
     <h1>SPACIBUGS</h1>
-    <p><a onclick="fullscreen();">Fullscreen mode</a></p>
-    <canvas id="canvas" width="1280" height="720"></canvas>
+    <h2><a onclick="fullscreen();">Enter full-screen mode</a></h2>
+    <canvas id="canvas"></canvas>
     <div id="output"></div>
   </body>
 </html>
