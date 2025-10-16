@@ -71,7 +71,7 @@
         //output.textContent = buttons.join(" ");
       }
       function logPointerEvent(e) {
-        output.textContent += `${e.timeStamp} ${e.type} #${e.pointerId} @${e.persistentDeviceId} (${e.offsetX}, ${e.offsetY})\n`;
+        output.innerHTML += `${e.timeStamp} ${e.type} #${e.pointerId} @${e.persistentDeviceId} (${e.offsetX}, ${e.offsetY})<br>\n`;
       }
       function fullscreen() {
         canvas.requestFullscreen()
