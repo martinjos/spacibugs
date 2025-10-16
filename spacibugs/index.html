@@ -16,12 +16,12 @@
         ctx = canvas.getContext("2d", {alpha: false});
         ctx.strokeStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        for (let y = 2*B_RADIUS; y < C_HEIGHT; y += 4*B_RADIUS) {
+        for (let y = 2*B_RADIUS; y < C_HEIGHT; y += 3*B_RADIUS) {
           ctx.beginPath();
-          ctx.ellipse(2*B_RADIUS, y, B_RADIUS, B_RADIUS, 0, 0, Math.PI);
+          ctx.ellipse(2*B_RADIUS, y, B_RADIUS, B_RADIUS, 0, 0, 2*Math.PI);
           ctx.stroke();
           ctx.beginPath();
-          ctx.ellipse(C_WIDTH-2*B_RADIUS, y, B_RADIUS, B_RADIUS, 0, 0, Math.PI);
+          ctx.ellipse(C_WIDTH-2*B_RADIUS, y, B_RADIUS, B_RADIUS, 0, 0, 2*Math.PI);
           ctx.stroke();
         }
         ctx.beginPath();
