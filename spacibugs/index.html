@@ -16,6 +16,7 @@
         canvas.addEventListener("pointerdown", pointerDown);
         canvas.addEventListener("pointerup", pointerUp);
         canvas.addEventListener("pointercancel", pointerUp);
+        canvas.addEventListener("pointermove", pointerMove);
         ctx = canvas.getContext("2d", {alpha: false});
         ctx.strokeStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -35,6 +36,7 @@
       var pointers = {};
       var buttons = new Array(6).fill(0, 0, 6);
       function pointerDown(event) {
+        logPointerEvent(event);
         let x = event.offsetX;
         let y = event.offsetY;
         let bx = -1, by = -1;
@@ -53,6 +55,7 @@
         }
       }
       function pointerUp(event) {
+        logPointerEvent(event);
         let id = event.pointerId;
         let bn = pointers[id];
         delete pointers[id];
@@ -61,13 +64,19 @@
           showButtons();
         }
       }
+      function pointerMove(event) {
+        logPointerEvent(event);
+      }
       function showButtons() {
-        output.textContent = buttons.join(" ");
+        //output.textContent = buttons.join(" ");
+      }
+      function logPointerEvent(e) {
+        output.textContent += `${e.timeStamp} ${e.type} #${e.pointerId} @${e.persistentDeviceId} (${e.offsetX}, ${e.offsetY})\n`;
       }
       function fullscreen() {
         canvas.requestFullscreen()
           .then((value) => {
-            output.textContent = `${canvas.width}x${canvas.height}\n`;
+            //output.textContent = `${canvas.width}x${canvas.height}\n`;
           });
       }
       document.addEventListener("DOMContentLoaded", init);
