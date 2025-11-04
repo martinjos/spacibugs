@@ -1,0 +1,48 @@
+on: [push]
+jobs:
+  fetch-from-github-io:
+    runs-on: ubuntu-latest
+    env:
+      SITE_REPO_URL: https://github.com/martinjos/martinjos.github.io
+      SITE_BRANCH: master-R
+      FILE_PAT: '^spacibugs/index\.html$'
+      FILE_SRC_NAME: spacibugs/index.html
+      FILE_DST_NAME: index.html
+      TARGET_BRANCH: main
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Switch to target branch
+        run: git checkout "$TARGET_BRANCH"
+      - name: Check URL
+        run: test "$SITE_REPO_URL" = "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY_OWNER/$GITHUB_REPOSITORY_OWNER.github.io"
+      - name: Fetch github.io site
+        run: git clone --branch "$SITE_BRANCH" "$SITE_REPO_URL" site
+      - name: Copy commits for file
+        run: |
+          git config user.name 'Martin Sidaway'
+          git config user.email '2389068+martinjos@users.noreply.github.com'
+          cd site
+          revs="$(git rev-list $SITE_BRANCH | tac)"
+          apply_revs=""
+          for commit in $revs; do
+            if git show --pretty="" --name-only $commit | grep "$FILE_PAT" > /dev/null; then
+              apply_revs="$apply_revs $commit"
+            fi
+          done
+          echo "Commits to apply: $apply_revs"
+          for commit in $apply_revs; do
+            echo "Apply $commit"
+            git checkout "$commit"
+            git format-patch --stdout -1 > patch.diff
+            cd ..
+            git am site/patch.diff
+            cd site
+          done
+          cd ..
+      - name: Log
+        run: git log --format=fuller --decorate
+      - name: Push
+        run: git push
